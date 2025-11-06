@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Profile - Student</title>
+  <link rel="stylesheet" href="createProfile.css">
+</head>
+<body>
+
+<!-- 🔵 Decorative Background Circles -->
+<div class="bg-circle circle1"></div>
+<div class="bg-circle circle2"></div>
+
+<div class="profile-container">
+  <h2>Create Your Student Profile</h2>
+
+  <!-- 🔹 Form submits to SaveProfileServlet -->
+<!-- To uncomment 
+ <form id="profileForm" action="create_profile.php" method="post" enctype="multipart/form-data"> -->
+
+    <!-- 🧍 Personal Details -->
+    <h3>Personal Details</h3>
+    <div class="input-group">
+      <label for="photo">Upload Your Formal Photograph</label>
+      <input type="file" id="photo" name="photo" accept="image/*" required>
+    </div>
+
+    <div class="input-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+    </div>
+
+    <div class="input-group">
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" required>
+    </div>
+
+    <div class="input-group">
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" placeholder="Enter your city" required>
+    </div>
+
+    <!-- 🔹 Contact Details -->
+    <div class="input-group">
+      <label for="contact">Contact Number</label>
+      <input type="tel" id="contact" name="contact" placeholder="Enter your contact number" required>
+    </div>
+
+    <div class="input-group">
+      <label for="whatsapp">WhatsApp Number</label>
+      <input type="tel" id="whatsapp" name="whatsapp" placeholder="Enter your WhatsApp number" required>
+    </div>
+
+    <!-- 🎓 Education Details -->
+    <h3>Education Details</h3>
+    <div class="input-group">
+      <label for="currentEducation">Current Education</label>
+      <input type="text" id="currentEducation" name="currentEducation" placeholder="e.g. BCA - Computer Science" required>
+    </div>
+
+    <div class="input-group">
+      <label for="yearOfPassing">Year of Passing (Current Degree)</label>
+      <input type="number" id="yearOfPassing" name="yearOfPassing" min="2020" max="2035" placeholder="e.g. 2025" required>
+    </div>
+
+    <div class="input-group">
+      <label for="educationStatus">Current Education Status</label>
+      <select id="educationStatus" name="educationStatus" required>
+        <option value="">Select</option>
+        <option>Studying</option>
+        <option>Completed</option>
+        <option>On Internship</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="cgpa">Current CGPA</label>
+      <input type="number" step="0.01" id="cgpa" name="cgpa" placeholder="e.g. 8.25" required>
+    </div>
+
+    <!-- 🏫 Academic Background -->
+    <h3>Academic Background</h3>
+    <div class="input-group">
+      <label for="school10">10th School Name</label>
+      <input type="text" id="school10" name="school10" placeholder="Enter 10th school name" required>
+    </div>
+
+    <div class="input-group">
+      <label for="percent10">10th Percentage</label>
+      <input type="number" step="0.01" id="percent10" name="percent10" placeholder="e.g. 85.6" required>
+    </div>
+
+    <div class="input-group">
+      <label for="school12">12th School Name</label>
+      <input type="text" id="school12" name="school12" placeholder="Enter 12th school name" required>
+    </div>
+
+    <div class="input-group">
+      <label for="percent12">12th Percentage</label>
+      <input type="number" step="0.01" id="percent12" name="percent12" placeholder="e.g. 87.5" required>
+    </div>
+
+    <div class="input-group">
+      <label for="collegeGrad">Graduation College Name</label>
+      <input type="text" id="collegeGrad" name="collegeGrad" placeholder="Enter graduation college name" required>
+    </div>
+
+    <div class="input-group">
+      <label for="percentGrad">Graduation Percentage / CGPA</label>
+      <input type="number" step="0.01" id="percentGrad" name="percentGrad" placeholder="e.g. 8.2" required>
+    </div>
+
+    <div class="input-group">
+      <label for="collegePG">Post Graduation College (if any)</label>
+      <input type="text" id="collegePG" name="collegePG" placeholder="Enter PG college name (optional)">
+    </div>
+
+    <div class="input-group">
+      <label for="percentPG">Post Graduation Percentage / CGPA</label>
+      <input type="number" step="0.01" id="percentPG" name="percentPG" placeholder="e.g. 8.0">
+    </div>
+
+    <!-- 💼 Other Information -->
+    <h3>Additional Information</h3>
+    <div class="input-group">
+      <label for="skills">Key Skills</label>
+      <textarea id="skills" name="skills" rows="3" placeholder="e.g. Java, MySQL, HTML, CSS, Communication Skills"></textarea>
+    </div>
+
+    <div class="input-group">
+      <label for="resume">Upload Resume (PDF)</label>
+      <input type="file" id="resume" name="resume" accept=".pdf" required>
+    </div>
+
+<button type="button" id="saveProfileBtn">Save Profile</button>
+  </form>
+</div>
+
+<!--  To uncomment while implementing Backend
+   <script>
+  const form = document.getElementById('profileForm');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Stop default form submission
+
+    // ✅ Use FormData to send files and form fields to servlet
+    const formData = new FormData(form);
+
+    fetch('SaveProfileServlet', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      alert("Profile saved successfully!");
+      // Redirect to homepage
+      window.location.href = "homePage.html";
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("Error saving profile. Please try again.");
+    });
+  });
+</script> -->
+<script>
+  const btn = document.getElementById('saveProfileBtn');
+  btn.addEventListener('click', function() {
+    alert("Profile Created Successfully!");
+    window.location.href = 'homePage.html'; // Redirect
+  });
+</script>
+
+</body>
+</html>

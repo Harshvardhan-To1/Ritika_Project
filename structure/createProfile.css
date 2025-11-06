@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background-color: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 0;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 🔵 Background Circles */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  z-index: 0;
+}
+.circle1 {
+  width: 300px;
+  height: 300px;
+  background-color: #1a46d2;
+  top: -50px;
+  left: -50px;
+}
+.circle2 {
+  width: 250px;
+  height: 250px;
+  background-color: #002855;
+  bottom: -60px;
+  right: -60px;
+}
+
+.profile-container {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 550px;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-container h2 {
+  color: #002855;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.profile-container h3 {
+  color: #003366;
+  margin: 25px 0 15px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  color: #003366;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: #003366;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #003366;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 20px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #002244;
+}
+
+/* Make file inputs look neat */
+input[type="file"] {
+  background-color: #f5f7fa;
+  padding: 10px;
+}

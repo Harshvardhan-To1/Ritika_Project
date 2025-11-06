@@ -1,0 +1,69 @@
+:root {
+  --bg: #FAFBFF;
+  --card: #FFFFFF;
+  --primary: #276EF1;
+  --accent: #00BFA6;
+  --muted: #6B7280;
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(17,24,39,0.06);
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: var(--font-sans); background: var(--bg); color: #0F172A; }
+
+header { display:flex; justify-content:space-between; align-items:center; padding:12px 24px; background: var(--card); box-shadow: var(--shadow); position: sticky; top:0; z-index:1000; }
+header .brand { display:flex; align-items:center; }
+header .brand img.logo { width:120px; height:50px; margin-right:10px; }
+header nav a { margin-left:24px; font-weight:600; color: var(--muted); text-decoration:none; transition: color 0.3s ease; }
+header nav a:hover { color: var(--primary); }
+
+.wrap { padding:24px; max-width:1200px; margin:0 auto; }
+h2 { margin-bottom:10px; }
+p { margin-bottom:20px; color: var(--muted); }
+
+/* Drive cards grid */
+.drive-grid {
+  display:flex;
+  flex-direction: column;
+  gap:40px;
+  margin-top:30px;
+}
+
+.drive-card {
+  background: var(--card);
+  padding:30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all 0.4s ease;
+  cursor:pointer;
+  width:100%;
+}
+
+.drive-card h3 { margin-top:0; margin-bottom:15px; font-size:1.8rem; transition: color 0.3s ease; }
+.drive-card p { margin-bottom:10px; transition: color 0.3s ease; }
+.drive-card button {
+  margin-top:15px;
+  padding:12px 20px;
+  background: var(--primary);
+  color:#fff;
+  border:none;
+  border-radius: var(--radius);
+  cursor:pointer;
+  font-weight:600;
+  transition: all 0.3s ease;
+}
+.drive-card button:hover {
+  background: var(--accent);
+  transform: scale(1.03);
+}
+
+/* Hover effect: Lift + Scale + Shadow + Color Change */
+.drive-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(17,24,39,0.2), 0 0 10px rgba(39,110,241,0.15);
+  background: linear-gradient(135deg, var(--card), rgba(39,110,241,0.05));
+}
+.drive-card:hover h3, .drive-card:hover p { color: var(--accent); }
+
+footer { text-align:center; padding:18px; margin-top:32px; color: var(--muted); background: var(--card); box-shadow: var(--shadow); }

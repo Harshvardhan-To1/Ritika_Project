@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #f4f7fc;
+  color: #333;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 40px;
+  background: white;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+}
+
+nav a {
+  text-decoration: none;
+  margin: 0 14px;
+  color: #333;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #0e57e6;
+}
+
+/* Section */
+.announcement-section {
+  max-width: 1200px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.announcement-section h2 {
+  font-size: 38px;
+  font-weight: 700;
+  color: #0e57e6;
+}
+
+.announcement-section p {
+  color: #666;
+}
+
+/* Grid */
+.announcement-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 40px;
+}
+
+/* Cards */
+.announcement-card {
+  width: 330px;
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.announcement-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 7px 18px rgba(0,0,0,0.12);
+}
+
+.announcement-card i {
+  font-size: 32px;
+  color: #0e57e6;
+  margin-bottom: 8px;
+}
+
+.announcement-card h3 {
+  margin: 10px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+}
+
+.announcement-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Footer */
+footer {
+  background: #f1f3f6;
+  padding: 120px 20px 30px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}

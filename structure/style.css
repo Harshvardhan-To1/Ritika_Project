@@ -1,0 +1,235 @@
+/* ===============================
+   Global Reset & Base Styling
+================================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ===============================
+   Header / Navbar
+================================*/
+header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 12px 60px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ===============================
+   Main Section Styling
+================================*/
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  padding: 40px 100px;
+}
+
+/* Welcome Text */
+.welcome {font: size 100px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.welcome h1 {
+  font-size: 35px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* ===============================
+   FIRST BLOCK
+================================*/
+.firstBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.text-block {
+ 
+  flex: 1;
+  min-width: 300px;
+}
+
+.text-block p {margin-left: 100px;
+  font-size: 30px;
+   padding-left: 100px;
+  font-weight:500;
+  color: #333;
+  /* line-height: 1.8; */
+}
+
+.text-block .highlight {
+  color: #4b3df3;
+  font-weight: 600;
+}
+
+/* Right Image (First Block) */
+.image-block {
+  flex: 1;
+  min-width: 300px;
+  text-align: right;
+}
+
+.image-block img {margin-right: 150px;
+  width: 85%;
+  max-width: 400px;
+}
+
+/* ===============================
+   SECOND BLOCK
+================================*/
+.secBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.image-block2 {
+  flex: 1;
+  min-width: 300px;
+}
+
+.image-block2 img {
+  width: 85%;
+  max-width: 400px;
+}
+
+.text-block2 {
+  font-size: 50px;
+  flex: 1;
+  min-width: 300px;
+}
+
+.section-head {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.contentf16 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom:5px;
+}
+
+/* ===============================
+   Button Styling
+================================*/
+.startNow {
+  border: none;
+  border-radius: 8px;
+  background-color: #4b3df3;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.startNow:hover {
+  background-color: #372fcf;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(75, 61, 243, 0.25);
+}
+
+/* ===============================
+   Footer Styling
+================================*/
+footer {
+  width: 100%;
+  background-color: #0a0b57;
+  text-align: center;
+  color: #fff;
+  padding: 14px 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 60px;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* ===============================
+   Responsive Design
+================================*/
+@media (max-width: 992px) {
+  main {
+    padding: 40px 50px;
+  }
+
+  .firstBlock,
+  .secBlock {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .image-block,
+  .image-block2 {
+    text-align: center;
+  }
+
+  .image-block img,
+  .image-block2 img {
+    width: 80%;
+  }
+
+  .text-block,
+  .text-block2 {
+    max-width: 100%;
+  }
+
+  .welcome h1 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 12px 20px;
+  }
+
+  .logo {
+    width: 120px;
+  }
+
+  main {
+    padding: 30px 20px;
+  }
+
+  .startNow {
+    font-size: 0.9rem;
+  /* padding: 8px 18px; */
+  }
+} 

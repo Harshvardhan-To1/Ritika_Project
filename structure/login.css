@@ -1,0 +1,165 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 🔵 Background Circles */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  z-index: 0;
+}
+.circle1 {
+  width: 300px;
+  height: 300px;
+  background-color: #1a46d2;
+  top: -50px;
+  left: -50px;
+}
+.circle2 {
+  width: 250px;
+  height: 250px;
+  background-color: #002855;
+  bottom: -60px;
+  right: -60px;
+}
+
+/* Container */
+.login-container {
+  background-color: #fff;
+  padding: 50px 40px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  text-align: center;
+  width: 420px;
+  z-index: 1;
+  position: relative;
+}
+
+/* Heading */
+.login-container h2 {
+  color: #002855;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+/* Labels */
+.login-container label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  color: #003366;
+  font-weight: 500;
+}
+
+/* Inputs */
+.login-container input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s;
+}
+.login-container input:focus {
+  border-color: #1a46d2;
+}
+
+/* Password Strength */
+.password-strength {
+  width: 100%;
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  position: relative;
+}
+#strengthBar {
+  height: 100%;
+  width: 0%;
+  background-color: red;
+  border-radius: 6px;
+  transition: width 0.3s;
+}
+#strengthText {
+  display: block;
+  font-size: 0.85rem;
+  color: #555;
+  text-align: left;
+  margin-top: 4px;
+}
+
+/* Remember me */
+.remember-me {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+.remember-me input {
+  width: 18px;
+  height: 18px;
+  margin: 0 10px 0 0;
+}
+
+/* Buttons */
+.btn-login {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #1a46d2;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-login:hover {
+  background-color: #143399;
+}
+
+.btn-signup {
+  width: 100%;
+  padding: 14px 0;
+  margin-top: 15px;
+  background-color: #002855;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-signup:hover {
+  background-color: #001f3f;
+}
+
+/* Divider */
+.divider {
+  margin: 15px 0;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .login-container {
+    padding: 30px 20px;
+    width: 90%;
+  }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCSIT DAVV Campus Placement 2025-26</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <img class="logo" src="../images/logo3.png" alt="logo">
+</header>
+
+<main>
+    <div class="welcome">
+        <h1>Welcome to the SCSIT, DAVV Campus Placement 2025-26</h1>
+    </div>
+
+    <div class="firstBlock">
+        <!-- Left Side (Text) -->
+        <div class="text-block">
+           <p >
+  Get right start. <br>
+  Based on your potential <br>
+  than, <span class="highlight" id="changingWord"></span>
+</p>
+
+        </div>
+
+        <!-- Right Side (Image) -->
+        <div class="image-block">
+            <img src="../images/forproject.png" alt="Project Image">
+        </div>
+    </div>
+
+
+    <div class="secBlock">
+        <div class="image-block2">
+             <img src="../images/superset-ip-student-hero.svg" alt="Project Image">
+        </div>
+        <div class="text-block2"><h2 class=section-head>Stress-free placement process</h2>
+        <div class=contentf16>Receive reliable information notifications,apply on the go via mobile apps, and keep better track of interview dates.</div>
+<button class="startNow" onclick="location.href='login.html'">Start now</button>
+    </div>
+</main>
+
+<footer>
+    <p>Made with ❤️</p>
+
+
+</body>
+<script>
+  const words = ["luck", "destiny", "hard work", "focus", "consistency", "preparation"];
+  let wordIndex = 0;
+  let charIndex = 0;
+  const typingSpeed = 150;
+  const erasingSpeed = 80;
+  const delayBetweenWords = 1000;
+
+  const changingWord = document.getElementById("changingWord");
+
+  function type() {
+    if (charIndex < words[wordIndex].length) {
+      changingWord.textContent += words[wordIndex].charAt(charIndex);
+      charIndex++;
+      setTimeout(type, typingSpeed);
+    } else {
+      setTimeout(erase, delayBetweenWords);
+    }
+  }
+
+  function erase() {
+    if (charIndex > 0) {
+      changingWord.textContent = words[wordIndex].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(erase, erasingSpeed);
+    } else {
+      wordIndex = (wordIndex + 1) % words.length;
+      setTimeout(type, typingSpeed);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (words.length) setTimeout(type, 500);
+  });
+</script>
+
+</html>

@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background-color: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 🔵 Background Circles */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  z-index: 0;
+}
+.circle1 {
+  width: 300px;
+  height: 300px;
+  background-color: #1a46d2;
+  top: -50px;
+  left: -50px;
+}
+.circle2 {
+  width: 250px;
+  height: 250px;
+  background-color: #002855;
+  bottom: -60px;
+  right: -60px;
+}
+
+/* 🧱 Signup Container */
+.signup-container {
+  background: #fff;
+  padding: 45px 50px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 420px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* 🧾 Heading */
+.signup-container h2 {
+  color: #002855;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* 🧩 Input Group */
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  color: #003366;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #003366;
+  outline: none;
+}
+
+/* 🔒 Password Strength Bar */
+.strength {
+  height: 6px;
+  border-radius: 4px;
+  background: #ddd;
+  margin-top: 6px;
+  transition: background 0.3s, width 0.3s;
+}
+
+/* 🧠 Remember Me Checkbox */
+.remember-me {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #003366;
+  position: relative;
+  top: 0.5px;
+}
+
+/* ✨ Button */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #003366;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #002244;
+}
+
+/* 🔗 Link to Login */
+.login-link {
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.login-link a {
+  color: #003366;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}

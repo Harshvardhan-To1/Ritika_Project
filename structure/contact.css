@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary: #0A66C2;
+  --text: #222;
+  --muted: #6f6f6f;
+  --bg: #f8f9fc;
+  --white: #ffffff;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Header */
+header {
+  width: 100%;
+  background: var(--white);
+  padding: 15px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px var(--shadow);
+  position: sticky;
+  top: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand .logo img {
+  width: 42px;
+  height: 42px;
+}
+
+nav a {
+  margin-left: 28px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  transition: 0.3s;
+}
+nav a:hover {
+  color: var(--primary);
+}
+
+/* CONTACT SECTION */
+.contact-section {
+  padding: 60px 6%;
+  text-align: center;
+}
+
+.contact-section h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.sub-info {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.contact-cards {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 25px;
+}
+
+.contact-card {
+  background: var(--white);
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: .3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.contact-card i {
+  font-size: 36px;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+.contact-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.contact-card p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 20px;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 40px;
+  background: var(--white);
+  padding: 18px 6%;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  border-top: 1px solid #ddd;
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+  .contact-cards {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media(max-width: 600px) {
+  nav a { margin-left: 14px; font-size: 14px; }
+  .contact-cards { grid-template-columns: 1fr; }
+}

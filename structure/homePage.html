@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Placemate — Homepage</title>
+  <link rel="stylesheet" href="homePage.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  
+</head>
+<body>
+  <span class="wrap">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="logo"><img src="../images/logoz.png"></div>
+        <div>
+          <div style="font-weight:800">Placemate</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Campus Placement Management</div>
+        </div>
+      </div>
+
+      <!-- Search Box -->
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search" placeholder="">
+      </div>
+
+      <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+      <script>
+        const phrases = [
+          "What you want to search?",
+          "Companies",
+          "Past placement"
+        ];
+
+        let i = 0, j = 0;
+        let currentPhrase = [];
+        let isDeleting = false;
+        let isEnd = false;
+        const input = document.getElementById('search');
+
+        function loop() {
+          isEnd = false;
+          input.placeholder = currentPhrase.join('');
+
+          if (i < phrases.length) {
+            if (!isDeleting && j <= phrases[i].length) {
+              currentPhrase.push(phrases[i][j]);
+              j++;
+            }
+
+            if (isDeleting && j <= phrases[i].length) {
+              currentPhrase.pop(phrases[i][j]);
+              j--;
+            }
+
+            if (j === phrases[i].length) {
+              isEnd = true;
+              isDeleting = true;
+            }
+
+            if (isDeleting && j === 0) {
+              currentPhrase = [];
+              isDeleting = false;
+              i++;
+              if (i === phrases.length) i = 0;
+            }
+          }
+
+          const speed = isEnd ? 1500 : isDeleting ? 50 : 100;
+          setTimeout(loop, speed);
+        }
+        loop();
+      </script>
+
+      <!-- NAVIGATION -->
+      <nav>
+        <a href="placementDrives.html">Placement Drives</a>
+        <a href="companies.html">Companies</a>
+        <a href="myApplications.jsp">My Applications</a>
+        <a href="announcements.html">Announcements</a>
+      </nav>
+
+      <div class="nav-right"><a href="announcements.html" class="btn btn-primary">
+  <i class="fa fa-bell"></i>
+</a>
+
+        </button>
+      </div>
+    </header>
+  </span>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="welcome">
+      <h1>Welcome, Adi!</h1>
+      <p>Keep your profile updated to increase your chances. Below are your upcoming drives, quick actions, and recent notifications.</p>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="location.href='viewDrives.html'">View Drives</button>
+        <button class="btn btn-ghost" onclick="location.href='updateProfile.jsp'">Update Profile</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="num">24</div>
+          <div class="label-small">This Semester</div>
+          <div class="label">Companies Visiting</div>
+        </div>
+        <div class="stat">
+          <div class="num">156</div>
+          <div class="label-small">Open Roles</div>
+          <div class="label">Available Jobs & Internships</div>
+        </div>
+        <div class="stat">
+          <div class="num">312</div>
+          <div class="label-small">All Time</div>
+          <div class="label">Total Students Placed</div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="profile-card">
+      <div class="avatar">A</div>
+      <div style="text-align:left;flex:1">
+        <div style="font-weight:800;text-align:center">Aditya Jaiswal</div>
+        <small>Computer Science — 3rd Year</small>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-primary" onclick="location.href='editProfile.jsp'">Edit</button>
+        <button class="btn btn-ghost" onclick="location.href='logout.jsp'">Logout</button>
+      </div>
+    </aside>
+  </section>
+
+  <!-- QUICK ACTIONS -->
+  <section class="quick-actions-full">
+    <h2>Quick Actions</h2>
+    <div class="quick-actions-container">
+      <div class="quick-action-card" onclick="location.href='uploadResume.html'"><i class="fa-solid fa-upload"></i><span>Upload Resume</span></div>
+      <div class="quick-action-card" onclick="location.href='applyDrive.html'"><i class="fa-solid fa-paper-plane"></i><span>Apply for Drive</span></div>
+      <div class="quick-action-card" onclick="location.href='checkEligibility.html'"><i class="fa-solid fa-check-circle"></i><span>Check Eligibility</span></div>
+      <div class="quick-action-card" onclick="location.href='viewApplied.html'"><i class="fa-solid fa-briefcase"></i><span>View Applied</span></div>
+      <div class="quick-action-card" onclick="location.href='mockInterview.html'"><i class="fa-solid fa-user-tie"></i><span>Mock Interview</span></div>
+      <div class="quick-action-card" onclick="location.href='downloadOffer.html'"><i class="fa-solid fa-file-arrow-down"></i><span>Download Offer</span></div>
+      <div class="quick-action-card" onclick="location.href='feedback.html'"><i class="fa-solid fa-comment-dots"></i><span>Feedback</span></div>
+      <div class="quick-action-card" onclick="location.href='notifications.html'"><i class="fa-solid fa-bell"></i><span>Notifications</span></div>
+    </div>
+  </section>
+
+  <!-- ANNOUNCEMENTS -->
+  <section class="announcements-full">
+    <h2>Announcements</h2>
+    <div class="announcements-grid">
+      <div class="announcement-column">
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">Resume submission deadline extended to 30 Oct</a></div>
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">Google results published on 26 Oct</a></div>
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">TCS HR interviews start next week</a></div>
+      </div>
+      <div class="announcement-column">
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">Mock Interviews Scheduled</a></div>
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">Placement Preparation Material Uploaded</a></div>
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">Company Z Drive on 5th Dec</a></div>
+      </div>
+      <div class="announcement-column">
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">New Internship Openings</a></div>
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">Resume Review Session on 31 Oct</a></div>
+        <div class="announcement-card"><i class="fa-solid fa-star"></i><a href="announcements.html">Interview Tips Webinar Scheduled</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLACED STUDENTS -->
+  <section class="placed-students-full">
+    <h2>Placed Students</h2>
+    <div class="students-flashcards">
+            <div class="student-card"><img src="../images/student5.png" alt="Student"><div class="student-name">Rashmi Singh</div><div class="student-company-logo">Capgemini</div></div>
+
+      <!-- <div class="student-card"><img src="../images/student6.jpg" alt="Student"><div class="student-name">Adi Kumar</div><div class="student-company-logo">Google</div></div> -->
+      <div class="student-card"><img src="../images/student1.webp" alt="Student"><div class="student-name">Riya Sharma</div><div class="student-company-logo">Wipro</div></div>
+      <!-- <div class="student-card"><img src="../images/student7.jpg" alt="Student"><div class="student-name">Rahul Singh</div><div class="student-company-logo">TCS</div></div> -->
+      <div class="student-card"><img src="../images/student2.webp" alt="Student"><div class="student-name">Neha Gupta</div><div class="student-company-logo">Infosys</div></div>
+      <!-- <div class="student-card"><img src="../images/student8.jpg" alt="Student"><div class="student-name">Vikram Patel</div><div class="student-company-logo">Microsoft</div></div> -->
+      <div class="student-card"><img src="../images/student3.webp" alt="Student"><div class="student-name">Anjali Sharma</div><div class="student-company-logo">Amazon</div></div>
+      <!-- <div class="student-card"><img src="../images/student9.jpg" alt="Student"><div class="student-name">Saurabh Jain</div><div class="student-company-logo">IBM</div></div> -->
+      <div class="student-card"><img src="../images/student4.webp" alt="Student"><div class="student-name">Pooja Mehta</div><div class="student-company-logo">Adobe</div></div>
+      <div class="student-card"><img src="../images/student10.webp" alt="Student"><div class="student-name">Karan Verma</div><div class="student-company-logo">Oracle</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© Placemate — Campus Placement Management</div>
+    <div style="display:flex;gap:12px">
+      <div><a href="help.html" style="font-weight:700;color:var(--muted)">Help</a></div>
+      <div><a href="terms.html" style="font-weight:700;color:var(--muted)">Terms</a></div>
+      <div><a href="contact.html" style="font-weight:700;color:var(--muted)">Contact</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const quickContainer = document.querySelector('.quick-actions-container');
+    let quickScroll = 0;
+    function autoScrollQuick() {
+      quickScroll += 1;
+      if(quickScroll > quickContainer.scrollWidth - quickContainer.clientWidth) quickScroll = 0;
+      quickContainer.scrollTo({ left: quickScroll, behavior: 'smooth' });
+    }
+    setInterval(autoScrollQuick, 50);
+
+    const studentsContainer = document.querySelector('.students-flashcards');
+    let studentScroll = 0;
+    function autoScrollStudents() {
+      studentScroll += 1;
+      if(studentScroll > studentsContainer.scrollWidth - studentsContainer.clientWidth) studentScroll = 0;
+      studentsContainer.scrollTo({ left: studentScroll, behavior: 'smooth' });
+    }
+    setInterval(autoScrollStudents, 50);
+  </script>
+
+</body>
+</html>
+

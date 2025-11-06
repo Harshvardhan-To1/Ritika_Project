@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Profile</title>
+  <link rel="stylesheet" href="updateProfile.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Update Profile</h1>
+    <form action="/update-profile" method="POST" enctype="multipart/form-data">
+      <label for="full_name">Full Name:</label>
+      <input type="text" id="full_name" name="full_name">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" name="phone">
+      <label for="resume">Resume:</label>
+      <input type="file" id="resume" name="resume">
+      <button type="submit">Update Profile</button>
+    </form>
+  </div>
+</body>
+</html>

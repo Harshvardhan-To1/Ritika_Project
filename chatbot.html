@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placemate — AI Chatbot</title>
+  <link rel="stylesheet" href="applyDrive.css">
+  <style>
+    .chat-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .chat-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 300px;
+      overflow-y: scroll;
+    }
+    .chat-input {
+      display: flex;
+      margin-top: 10px;
+    }
+    .chat-input input {
+      flex-grow: 1;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <img src="images/logo3.png" alt="Placemate Logo" class="logo">
+    <h1>Placemate</h1>
+  </div>
+  <nav>
+    <a href="homePage.html">🏠 Home</a>
+    <a href="chatbot.html">🤖 AI Chatbot</a>
+  </nav>
+</header>
+<main class="wrap">
+  <h2>AI Chatbot</h2>
+  <div class="chat-container">
+    <div class="chat-box" id="chat-box"></div>
+    <div class="chat-input">
+      <input type="text" id="user-message" placeholder="Type your message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</main>
+<script>
+  async function sendMessage() {
+    const userMessage = document.getElementById('user-message').value;
+    const chatBox = document.getElementById('chat-box');
+
+    // Display user message
+    chatBox.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+
+    // Send message to the chatbot
+    const response = await fetch('/chatbot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: userMessage })
+    });
+    const data = await response.json();
+    const botResponse = data.response;
+
+    // Display bot response
+    chatBox.innerHTML += `<p><strong>Chatbot:</strong> ${botResponse}</p>`;
+
+    // Clear the input field
+    document.getElementById('user-message').value = '';
+  }
+</script>
+</body>
+</html>

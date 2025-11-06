@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Profile - SCSIT DAVV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px 50px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      color: #667eea;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .nav-links a:hover {
+      background: #667eea;
+      color: white;
+    }
+
+    /* Container */
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .form-header .icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .form-header h2 {
+      color: #2d3748;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .form-header p {
+      color: #4a5568;
+      font-size: 1rem;
+    }
+
+    /* Form Styles */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    label {
+      color: #2d3748;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    label .icon {
+      font-size: 1.2rem;
+    }
+
+    label .required {
+      color: #e53e3e;
+      font-size: 1.2rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      padding: 15px 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      background: #f7fafc;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    input[type="text"]:hover,
+    input[type="email"]:hover,
+    input[type="tel"]:hover {
+      border-color: #cbd5e0;
+    }
+
+    /* File Upload */
+    .file-upload-wrapper {
+      position: relative;
+      background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
+      border: 2px dashed #cbd5e0;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .file-upload-wrapper:hover {
+      border-color: #667eea;
+      background: linear-gradient(135deg, #eef2ff 0%, #ffffff 100%);
+    }
+
+    .file-upload-wrapper.has-file {
+      border-color: #48bb78;
+      border-style: solid;
+      background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%);
+    }
+
+    input[type="file"] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-upload-content {
+      pointer-events: none;
+    }
+
+    .file-upload-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #667eea;
+    }
+
+    .file-upload-text {
+      color: #2d3748;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .file-upload-hint {
+      color: #718096;
+      font-size: 0.9rem;
+    }
+
+    .file-name {
+      color: #48bb78;
+      font-weight: 600;
+      margin-top: 10px;
+      word-break: break-all;
+    }
+
+    /* Current Resume */
+    .current-resume {
+      background: #eef2ff;
+      border: 2px solid #667eea;
+      padding: 15px 20px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .current-resume-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .current-resume-icon {
+      font-size: 1.5rem;
+    }
+
+    .current-resume-text {
+      color: #2d3748;
+      font-weight: 600;
+    }
+
+    .current-resume-hint {
+      color: #4a5568;
+      font-size: 0.85rem;
+    }
+
+    .view-resume-btn {
+      padding: 8px 16px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .view-resume-btn:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+
+    .btn-secondary:hover {
+      background: #f7fafc;
+      transform: translateY(-3px);
+    }
+
+    /* Helper Text */
+    .helper-text {
+      color: #718096;
+      font-size: 0.85rem;
+      margin-top: -15px;
+      padding-left: 5px;
+    }
+
+    /* Success Message */
+    .info-box {
+      background: #e6f4ea;
+      border-left: 4px solid #48bb78;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .info-box .icon {
+      font-size: 1.5rem;
+      color: #48bb78;
+    }
+
+    .info-box-text {
+      color: #2d3748;
+      font-size: 0.95rem;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .nav-links {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .form-card {
+        padding: 30px 20px;
+      }
+
+      .form-header h2 {
+        font-size: 1.6rem;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .current-resume {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-header .icon {
+        font-size: 3rem;
+      }
+
+      .form-header h2 {
+        font-size: 1.4rem;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"] {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Loading State */
+    .btn-primary:disabled {
+      background: #cbd5e0;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary:disabled:hover {
+      transform: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>✏️ Update Profile</h1>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/profile.html">View Profile</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </div>
+
+  <div class="container">
+    <div class="form-card">
+      <!-- Form Header -->
+      <div class="form-header">
+        <div class="icon">👤</div>
+        <h2>Update Your Profile</h2>
+        <p>Keep your information up to date for better opportunities</p>
+      </div>
+
+      <!-- Info Box -->
+      <div class="info-box">
+        <span class="icon">💡</span>
+        <div class="info-box-text">
+          Tip: Complete your profile to increase visibility to recruiters
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form action="/update-profile" method="POST" enctype="multipart/form-data" id="updateForm">
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="full_name">
+            <span class="icon">👤</span>
+            Full Name
+            <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="full_name" 
+            name="full_name" 
+            placeholder="Enter your full name"
+            required
+          >
+          <div class="helper-text">As it appears on official documents</div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">
+            <span class="icon">📧</span>
+            Email Address
+            <span class="required">*</span>
+          </label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="your.email@example.com"
+            required
+          >
+          <div class="helper-text">We'll send placement updates to this email</div>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="phone">
+            <span class="icon">📱</span>
+            Phone Number
+            <span class="required">*</span>
+          </label>
+          <input 
+            type="tel" 
+            id="phone" 
+            name="phone" 
+            placeholder="+91 XXXXX XXXXX"
+            pattern="[0-9+\s\-()]+"
+            required
+          >
+          <div class="helper-text">Recruiters will contact you on this number</div>
+        </div>
+
+        <!-- Resume -->
+        <div class="form-group">
+          <label for="resume">
+            <span class="icon">📄</span>
+            Resume / CV
+          </label>
+          
+          <div class="file-upload-wrapper" id="fileUploadWrapper">
+            <input 
+              type="file" 
+              id="resume" 
+              name="resume" 
+              accept=".pdf,.doc,.docx"
+            >
+            <div class="file-upload-content">
+              <div class="file-upload-icon">📤</div>
+              <div class="file-upload-text">Click to upload or drag and drop</div>
+              <div class="file-upload-hint">PDF, DOC, DOCX (Max 5MB)</div>
+              <div class="file-name" id="fileName"></div>
+            </div>
+          </div>
+
+          <div id="currentResume" class="current-resume" style="display: none;">
+            <div class="current-resume-info">
+              <span class="current-resume-icon">✅</span>
+              <div>
+                <div class="current-resume-text">Current Resume Uploaded</div>
+                <div class="current-resume-hint">Upload a new file to replace</div>
+              </div>
+            </div>
+            <a href="#" id="viewResumeLink" target="_blank" class="view-resume-btn">View</a>
+          </div>
+
+          <div class="helper-text">Keep your resume updated for better opportunities</div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            💾 Save Changes
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='/profile.html'">
+            ↩️ Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Load current profile data
+    fetch('/profile-data')
+      .then(response => response.json())
+      .then(data => {
+        if (data.full_name) document.getElementById('full_name').value = data.full_name;
+        if (data.email) document.getElementById('email').value = data.email;
+        if (data.phone) document.getElementById('phone').value = data.phone;
+        
+        // Show current resume if exists
+        if (data.resume_path && data.resume_path.trim() !== '') {
+          document.getElementById('currentResume').style.display = 'flex';
+          document.getElementById('viewResumeLink').href = data.resume_path;
+        }
+      })
+      .catch(error => {
+        console.error('Error loading profile:', error);
+      });
+
+    // File upload handling
+    const fileInput = document.getElementById('resume');
+    const fileUploadWrapper = document.getElementById('fileUploadWrapper');
+    const fileName = document.getElementById('fileName');
+
+    fileInput.addEventListener('change', function(e) {
+      if (this.files && this.files[0]) {
+        const file = this.files[0];
+        const fileSize = (file.size / 1024 / 1024).toFixed(2); // MB
+        
+        // Check file size (5MB limit)
+        if (file.size > 5 * 1024 * 1024) {
+          alert('File size must be less than 5MB');
+          this.value = '';
+          return;
+        }
+        
+        fileName.textContent = `Selected: ${file.name} (${fileSize} MB)`;
+        fileUploadWrapper.classList.add('has-file');
+      } else {
+        fileName.textContent = '';
+        fileUploadWrapper.classList.remove('has-file');
+      }
+    });
+
+    // Form submission
+    const form = document.getElementById('updateForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function(e) {
+      // Disable submit button to prevent double submission
+      submitBtn.disabled = true;
+      submitBtn.textContent = '⏳ Saving...';
+    });
+
+    // Phone number formatting
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function(e) {
+      // Remove any non-numeric characters except + and spaces
+      let value = this.value.replace(/[^\d+\s\-()]/g, '');
+      this.value = value;
+    });
+  </script>
+</body>
+</html>

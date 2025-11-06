@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="applyDrive.css">
+  <style>
+    .error-message {
+      color: red;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #ffe6e6;
+      border-radius: 4px;
+      display: none;
+    }
+    .success-message {
+      color: green;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #e6ffe6;
+      border-radius: 4px;
+      display: none;
+    }
+    .form-group {
+      margin: 15px 0;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .form-group small {
+      display: block;
+      margin-top: 5px;
+      color: #666;
+      font-size: 12px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .signin-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sign Up</h1>
+    <div id="error-message" class="error-message"></div>
+    <div id="success-message" class="success-message"></div>
+    
+    <form id="signup-form" action="/signup" method="POST">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required minlength="3">
+        <small>Must be at least 3 characters long</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required minlength="6">
+        <small>Must be at least 6 characters long</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </div>
+      
+      <button type="submit" id="submit-btn">Sign Up</button>
+    </form>
+    
+    <div class="signin-link">
+      <p>Already have an account? <a href="/signin.html">Sign In</a></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('signup-form');
+    const errorElement = document.getElementById('error-message');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', function(e) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      const username = document.getElementById('username').value;
+
+      // Clear previous errors
+      errorElement.style.display = 'none';
+      errorElement.textContent = '';
+
+      // Validate username length
+      if (username.length < 3) {
+        e.preventDefault();
+        errorElement.textContent = 'Username must be at least 3 characters long.';
+        errorElement.style.display = 'block';
+        return;
+      }
+
+      // Validate password length
+      if (password.length < 6) {
+        e.preventDefault();
+        errorElement.textContent = 'Password must be at least 6 characters long.';
+        errorElement.style.display = 'block';
+        return;
+      }
+
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        errorElement.textContent = 'Passwords do not match. Please try again.';
+        errorElement.style.display = 'block';
+        return;
+      }
+
+      // Disable button to prevent double submission
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating account...';
+    });
+
+    // Get error message from URL if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    if (error) {
+      errorElement.textContent = decodeURIComponent(error);
+      errorElement.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

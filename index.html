@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCSIT DAVV Campus Placement 2025-26</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <img class="logo" src="images/logo3.png" alt="SCSIT DAVV Logo" onerror="this.style.display='none'; document.querySelector('.logo-text').style.display='block';">
+    <h1 class="logo-text" style="display: none;">🎓 SCSIT DAVV</h1>
+</header>
+
+<main>
+    <div class="welcome">
+        <h1>Welcome to the SCSIT, DAVV Campus Placement 2025-26</h1>
+    </div>
+
+    <div class="firstBlock">
+        <!-- Left Side (Text) -->
+        <div class="text-block">
+            <p>
+                Get right start. <br>
+                Based on your potential <br>
+                than, <span class="highlight" id="changingWord"></span>
+            </p>
+        </div>
+
+        <!-- Right Side (Image) -->
+        <div class="image-block">
+            <img src="images/forproject.png" alt="Student Success" onerror="this.src='https://illustrations.popsy.co/amber/student-going-to-school.svg'">
+        </div>
+    </div>
+
+    <div class="secBlock">
+        <div class="image-block2">
+            <img src="images/superset-ip-student-hero.svg" alt="Placement Process" onerror="this.src='https://illustrations.popsy.co/amber/working-vacation.svg'">
+        </div>
+        <div class="text-block2">
+            <h2 class="section-head">Stress-free placement process</h2>
+            <div class="contentf16">
+                Receive reliable information notifications, apply on the go via mobile apps, 
+                and keep better track of interview dates.
+            </div>
+            <div class="button-group">
+                <button class="startNow primary" onclick="location.href='signin.html'">Sign In</button>
+                <button class="startNow secondary" onclick="location.href='signup.html'">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portal Services Section - SIMPLIFIED TO 3 SERVICES -->
+    <div class="services-section">
+        <h2>Explore Our Portal Services</h2>
+        <p class="services-subtitle">Everything you need for a successful placement journey</p>
+        
+        <div class="services-grid services-grid-3">
+            <div class="service-card" onclick="location.href='profile.html'">
+                <div class="service-icon">👤</div>
+                <h3>My Profile</h3>
+                <p>Manage your personal information, upload resume, and track your progress</p>
+                <button class="service-btn">View Profile →</button>
+            </div>
+
+            <div class="service-card" onclick="location.href='chatbot.html'">
+                <div class="service-icon">🤖</div>
+                <h3>AI Career Assistant</h3>
+                <p>Get instant help with resume tips, interview prep, and career guidance</p>
+                <button class="service-btn">Chat Now →</button>
+            </div>
+
+            <div class="service-card" onclick="location.href='uploadResume.html'">
+                <div class="service-icon">📄</div>
+                <h3>Upload Resume</h3>
+                <p>Keep your resume updated and ready for recruiters</p>
+                <button class="service-btn">Upload →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Features Section -->
+    <div class="features-section">
+        <h2>Why Choose Our Placement Portal?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Track Applications</h3>
+                <p>Keep track of all your job applications in one place</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Real-time Notifications</h3>
+                <p>Get instant updates about new opportunities and interviews</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3>Company Profiles</h3>
+                <p>Access detailed information about recruiting companies</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Assistant</h3>
+                <p>Get help with resume tips and interview preparation</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div class="stats-section">
+        <h2>Our Placement Success</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Students Placed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Top Companies</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Placement Rate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">12 LPA</div>
+                <div class="stat-label">Average Package</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>Made with ❤️ by SCSIT DAVV | Campus Placement Cell 2025-26</p>
+</footer>
+
+<script>
+    const words = ["luck", "destiny", "hard work", "focus", "consistency", "preparation"];
+    let wordIndex = 0;
+    let charIndex = 0;
+    const typingSpeed = 150;
+    const erasingSpeed = 80;
+    const delayBetweenWords = 1000;
+
+    const changingWord = document.getElementById("changingWord");
+
+    function type() {
+        if (charIndex < words[wordIndex].length) {
+            changingWord.textContent += words[wordIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingSpeed);
+        } else {
+            setTimeout(erase, delayBetweenWords);
+        }
+    }
+
+    function erase() {
+        if (charIndex > 0) {
+            changingWord.textContent = words[wordIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(erase, erasingSpeed);
+        } else {
+            wordIndex = (wordIndex + 1) % words.length;
+            setTimeout(type, typingSpeed);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (words.length) setTimeout(type, 500);
+    });
+</script>
+
+</body>
+</html>

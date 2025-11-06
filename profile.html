@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - SCSIT DAVV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px 50px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      color: #667eea;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .nav-links a:hover {
+      background: #667eea;
+      color: white;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: white;
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    /* Loading and Error States */
+    .loading {
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .loading::after {
+      content: '...';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    .error-message {
+      background: #fff3cd;
+      color: #856404;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid #ffc107;
+      margin-bottom: 20px;
+      display: none;
+      animation: shake 0.5s ease;
+    }
+
+    /* Profile Header */
+    .profile-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 3rem;
+      color: white;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .profile-header h2 {
+      color: #2d3748;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .profile-status {
+      display: inline-block;
+      padding: 8px 20px;
+      background: #e6f4ea;
+      color: #1e7e34;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* Profile Info Section */
+    .profile-info {
+      display: none;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .info-item {
+      background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
+      padding: 25px;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .info-item:hover {
+      border-color: #667eea;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+    }
+
+    .info-item label {
+      display: block;
+      color: #667eea;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-item .value {
+      color: #2d3748;
+      font-size: 1.1rem;
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .empty-field {
+      color: #999;
+      font-style: italic;
+      font-size: 1rem;
+    }
+
+    /* Resume Section */
+    .resume-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      color: white;
+      text-align: center;
+    }
+
+    .resume-section h3 {
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .resume-section .resume-link {
+      display: inline-block;
+      padding: 12px 30px;
+      background: white;
+      color: #667eea;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .resume-section .resume-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Action Buttons */
+    .profile-actions {
+      display: none;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 40px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+
+    .btn-secondary:hover {
+      background: #667eea;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .btn-danger {
+      background: white;
+      color: #dc3545;
+      border: 2px solid #dc3545;
+    }
+
+    .btn-danger:hover {
+      background: #dc3545;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40% { content: '..'; }
+      60%, 100% { content: '...'; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .nav-links {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .profile-card {
+        padding: 30px 20px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    /* Quick Stats */
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .stat-card .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>🎓 My Profile</h1>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/chatbot.html">Chatbot</a>
+      <a href="/applyDrive.html">Apply</a>
+    </nav>
+  </div>
+
+  <div class="container">
+    <!-- Loading State -->
+    <div id="loading" class="loading">Loading your profile</div>
+
+    <!-- Error Message -->
+    <div id="error-message" class="error-message"></div>
+
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar">👤</div>
+        <h2 id="profile-name">Student Profile</h2>
+        <span class="profile-status">✓ Active Student</span>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <div class="stat-card">
+          <div class="stat-number" id="applications-count">0</div>
+          <div class="stat-label">Applications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Profile Complete</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="profile-views">---</div>
+          <div class="stat-label">Profile Views</div>
+        </div>
+      </div>
+
+      <!-- Profile Info -->
+      <div id="profile-info" class="profile-info">
+        <h3 style="color: #2d3748; margin-bottom: 25px; font-size: 1.5rem;">Personal Information</h3>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <label>👤 Full Name</label>
+            <div class="value" id="full-name"></div>
+          </div>
+          
+          <div class="info-item">
+            <label>📧 Email Address</label>
+            <div class="value" id="email"></div>
+          </div>
+          
+          <div class="info-item">
+            <label>📱 Phone Number</label>
+            <div class="value" id="phone"></div>
+          </div>
+          
+          <div class="info-item">
+            <label>📄 Resume Status</label>
+            <div class="value" id="resume-status"></div>
+          </div>
+        </div>
+
+        <!-- Resume Section -->
+        <div class="resume-section" id="resume-section" style="display: none;">
+          <h3>📄 Your Resume</h3>
+          <p style="margin-bottom: 15px; opacity: 0.9;">Your resume is ready to share with recruiters</p>
+          <span id="resume-link"></span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div id="profile-actions" class="profile-actions">
+        <a href="/updateProfile.html" class="btn btn-primary">✏️ Update Profile</a>
+        <a href="/applyDrive.html" class="btn btn-secondary">💼 Apply to Companies</a>
+        <a href="/logout" class="btn btn-danger">🚪 Logout</a>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Fetch profile data
+    fetch('/profile-data')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Hide loading message
+        document.getElementById('loading').style.display = 'none';
+        
+        // Show profile info
+        document.getElementById('profile-info').style.display = 'block';
+        document.getElementById('profile-actions').style.display = 'flex';
+        
+        // Update profile name in header
+        if (data.full_name && data.full_name.trim() !== '') {
+          document.getElementById('profile-name').textContent = data.full_name;
+          document.querySelector('.profile-avatar').textContent = data.full_name.charAt(0).toUpperCase();
+        }
+        
+        // Set full name
+        const fullNameElement = document.getElementById('full-name');
+        if (data.full_name && data.full_name.trim() !== '') {
+          fullNameElement.textContent = data.full_name;
+        } else {
+          fullNameElement.innerHTML = '<span class="empty-field">Not set</span>';
+        }
+        
+        // Set email
+        const emailElement = document.getElementById('email');
+        if (data.email && data.email.trim() !== '') {
+          emailElement.textContent = data.email;
+        } else {
+          emailElement.innerHTML = '<span class="empty-field">Not set</span>';
+        }
+        
+        // Set phone
+        const phoneElement = document.getElementById('phone');
+        if (data.phone && data.phone.trim() !== '') {
+          phoneElement.textContent = data.phone;
+        } else {
+          phoneElement.innerHTML = '<span class="empty-field">Not set</span>';
+        }
+        
+        // Set resume
+        const resumeStatusElement = document.getElementById('resume-status');
+        const resumeLinkElement = document.getElementById('resume-link');
+        const resumeSection = document.getElementById('resume-section');
+        
+        if (data.resume_path && data.resume_path.trim() !== '') {
+          resumeStatusElement.innerHTML = '✅ <span style="color: #1e7e34;">Uploaded</span>';
+          resumeLinkElement.innerHTML = `<a href="${data.resume_path}" target="_blank" class="resume-link">📥 View Resume</a>`;
+          resumeSection.style.display = 'block';
+        } else {
+          resumeStatusElement.innerHTML = '<span class="empty-field">❌ Not uploaded</span>';
+          resumeSection.style.display = 'none';
+        }
+
+        // Calculate profile completion
+        let completionScore = 0;
+        if (data.full_name && data.full_name.trim()) completionScore += 25;
+        if (data.email && data.email.trim()) completionScore += 25;
+        if (data.phone && data.phone.trim()) completionScore += 25;
+        if (data.resume_path && data.resume_path.trim()) completionScore += 25;
+
+        document.querySelector('.quick-stats .stat-card:nth-child(2) .stat-number').textContent = completionScore + '%';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('loading').style.display = 'none';
+        const errorElement = document.getElementById('error-message');
+        errorElement.textContent = '⚠️ Error loading profile. Please try refreshing the page or contact support.';
+        errorElement.style.display = 'block';
+      });
+  </script>
+</body>
+</html>

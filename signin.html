@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="applyDrive.css">
+  <style>
+    .error-message {
+      color: red;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #ffe6e6;
+      border-radius: 4px;
+      display: none;
+    }
+    .form-group {
+      margin: 15px 0;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .signup-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sign In</h1>
+    <div id="error-message" class="error-message"></div>
+    
+    <form id="signin-form" action="/signin" method="POST">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      
+      <button type="submit">Sign In</button>
+    </form>
+    
+    <div class="signup-link">
+      <p>Don't have an account? <a href="/signup.html">Sign Up</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Get error message from URL if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    if (error) {
+      const errorElement = document.getElementById('error-message');
+      errorElement.textContent = decodeURIComponent(error);
+      errorElement.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

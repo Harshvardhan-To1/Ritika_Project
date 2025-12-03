@@ -1,0 +1,26 @@
+
+> app@1.0.0 start
+> node server.js
+
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+Server is running on http://localhost:3000
+Make sure the "uploads" directory exists!
+Connected to the placements database.
+Users table ready.
+Profiles table ready.
+Applications table ready.
+Success stories table ready.
+Signup attempt: {
+  username: 'testuser_verif',
+  email: 'test@example.com',
+  passwordLength: 11
+}
+User created with ID: 1
+
+---------------------------------------------------------
+SIMULATED EMAIL TO: test@example.com
+SUBJECT: Verify your email
+BODY: Click here to verify your account: http://localhost:3000/verify-email?token=e311559f81c4fb252acfec3c95d346c2130b497a3501fdde513677c5eb4db879
+---------------------------------------------------------
+
+Profile created for user: 1

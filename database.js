@@ -14,7 +14,10 @@ db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
+    email TEXT,
+    password TEXT NOT NULL,
+    is_verified INTEGER DEFAULT 0,
+    verification_token TEXT
   )`, (err) => {
     if (err) {
       console.error('Error creating users table:', err.message);
@@ -48,6 +51,22 @@ db.serialize(() => {
       console.error('Error creating applications table:', err.message);
     } else {
       console.log('Applications table ready.');
+    }
+  });
+
+  db.run(`CREATE TABLE IF NOT EXISTS success_stories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    student_name TEXT,
+    company_name TEXT NOT NULL,
+    story TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+  )`, (err) => {
+    if (err) {
+      console.error('Error creating success_stories table:', err.message);
+    } else {
+      console.log('Success stories table ready.');
     }
   });
 });

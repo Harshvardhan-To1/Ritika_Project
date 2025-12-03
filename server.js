@@ -29,6 +29,8 @@ app.use(session({
   }
 }));
 
+const crypto = require('crypto');
+
 // Set up storage for uploaded files
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -145,13 +147,13 @@ app.get('/signup', (req, res) => {
 
 // FIXED: Signup route with better validation and error handling
 app.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
 
-  console.log('Signup attempt:', { username, passwordLength: password?.length });
+  console.log('Signup attempt:', { username, email, passwordLength: password?.length });
 
   // Validate input
-  if (!username || !password) {
-    return sendErrorPage(res, 400, 'Username and password are required.');
+  if (!username || !password || !email) {
+    return sendErrorPage(res, 400, 'Username, email and password are required.');
   }
 
   if (username.length < 3) {
@@ -164,33 +166,42 @@ app.post('/signup', async (req, res) => {
 
   try {
     // Check if user already exists
-    const checkSql = `SELECT * FROM users WHERE username = ?`;
-    db.get(checkSql, [username], async (err, existingUser) => {
+    const checkSql = `SELECT * FROM users WHERE username = ? OR email = ?`;
+    db.get(checkSql, [username, email], async (err, existingUser) => {
       if (err) {
         console.error('Database error checking user:', err.message);
         return sendErrorPage(res, 500, 'Database error. Please try again.');
       }
 
       if (existingUser) {
-        return sendErrorPage(res, 400, 'Username already exists. Please choose another username.');
+        return sendErrorPage(res, 400, 'Username or email already exists. Please choose another.');
       }
 
       try {
         // Hash password and create user
         const hashedPassword = await bcrypt.hash(password, 10);
-        const insertSql = `INSERT INTO users (username, password) VALUES (?, ?)`;
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        const insertSql = `INSERT INTO users (username, password, email, verification_token, is_verified) VALUES (?, ?, ?, ?, 0)`;
         
-        db.run(insertSql, [username, hashedPassword], function(err) {
+        db.run(insertSql, [username, hashedPassword, email, verificationToken], function(err) {
           if (err) {
             console.error('Error creating user:', err.message);
             return sendErrorPage(res, 500, 'Error creating user. Please try again.');
           }
           
           console.log('User created with ID:', this.lastID);
+
+          // SIMULATE SENDING EMAIL
+          const verifyLink = `http://localhost:${port}/verify-email?token=${verificationToken}`;
+          console.log(`\n---------------------------------------------------------`);
+          console.log(`SIMULATED EMAIL TO: ${email}`);
+          console.log(`SUBJECT: Verify your email`);
+          console.log(`BODY: Click here to verify your account: ${verifyLink}`);
+          console.log(`---------------------------------------------------------\n`);
           
-          // Create empty profile for new user
-          const profileSql = `INSERT INTO profiles (user_id, full_name, email, phone, resume_path) VALUES (?, '', '', '', '')`;
-          db.run(profileSql, [this.lastID], (profileErr) => {
+          // Create empty profile for new user, initializing with email
+          const profileSql = `INSERT INTO profiles (user_id, full_name, email, phone, resume_path) VALUES (?, '', ?, '', '')`;
+          db.run(profileSql, [this.lastID, email], (profileErr) => {
             if (profileErr) {
               console.error('Error creating profile:', profileErr.message);
             } else {
@@ -198,13 +209,12 @@ app.post('/signup', async (req, res) => {
             }
           });
 
-          // Redirect to signin with success message
+          // Redirect to success page or show message
           res.send(`
             <!DOCTYPE html>
             <html>
             <head>
               <title>Signup Successful</title>
-              <meta http-equiv="refresh" content="2;url=/signin.html">
               <style>
                 body {
                   font-family: Arial, sans-serif;
@@ -220,16 +230,24 @@ app.post('/signup', async (req, res) => {
                   padding: 20px;
                   margin: 20px 0;
                 }
-                .success-box h2 {
-                  color: #00aa00;
-                  margin-top: 0;
+                .info-box {
+                    background-color: #e6f7ff;
+                    border: 1px solid #1890ff;
+                    border-radius: 5px;
+                    padding: 20px;
+                    margin: 20px 0;
                 }
               </style>
             </head>
             <body>
               <div class="success-box">
                 <h2>✓ Account Created Successfully!</h2>
-                <p>Redirecting to sign in page...</p>
+              </div>
+              <div class="info-box">
+                <h3>Please Verify Your Email</h3>
+                <p>We have sent a verification link to <strong>${email}</strong>.</p>
+                <p>Please check the server console (simulated email) to get the link and verify your account before logging in.</p>
+                <a href="/signin.html">Go to Sign In</a>
               </div>
             </body>
             </html>
@@ -244,6 +262,69 @@ app.post('/signup', async (req, res) => {
     console.error('Signup error:', error);
     return sendErrorPage(res, 500, 'An unexpected error occurred. Please try again.');
   }
+});
+
+// Email verification route
+app.get('/verify-email', (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    return sendErrorPage(res, 400, 'Invalid verification link.');
+  }
+
+  const sql = `SELECT * FROM users WHERE verification_token = ?`;
+  db.get(sql, [token], (err, user) => {
+    if (err) {
+      console.error('Database error verifying email:', err);
+      return sendErrorPage(res, 500, 'Error verifying email.');
+    }
+
+    if (!user) {
+      return sendErrorPage(res, 400, 'Invalid or expired verification link.');
+    }
+
+    // Update user as verified and clear token
+    const updateSql = `UPDATE users SET is_verified = 1, verification_token = NULL WHERE id = ?`;
+    db.run(updateSql, [user.id], (err) => {
+      if (err) {
+        console.error('Error updating verification status:', err);
+        return sendErrorPage(res, 500, 'Error verifying email.');
+      }
+
+      res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Email Verified</title>
+          <meta http-equiv="refresh" content="3;url=/signin.html">
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              max-width: 600px;
+              margin: 50px auto;
+              padding: 20px;
+              text-align: center;
+            }
+            .success-box {
+              background-color: #e6ffe6;
+              border: 1px solid #44ff44;
+              border-radius: 5px;
+              padding: 20px;
+              margin: 20px 0;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="success-box">
+            <h2>✓ Email Verified Successfully!</h2>
+            <p>You can now sign in to your account.</p>
+            <p>Redirecting to sign in page...</p>
+          </div>
+        </body>
+        </html>
+      `);
+    });
+  });
 });
 
 // Redirect /signin GET requests to signin.html
@@ -272,6 +353,11 @@ app.post('/signin', (req, res) => {
     if (!user) {
       console.log('User not found:', username);
       return sendErrorPage(res, 401, 'Invalid username or password.');
+    }
+
+    // Check if email is verified
+    if (user.is_verified === 0) {
+      return sendErrorPage(res, 403, 'Please verify your email address before signing in.');
     }
 
     try {
@@ -402,6 +488,56 @@ app.get('/logout', (req, res) => {
 // FIXED: Serve profile.html from root directory
 app.get('/profile.html', protectedRoute, (req, res) => {
   res.sendFile(path.join(__dirname, 'profile.html'));
+});
+
+// Serve successStories.html
+app.get('/success-stories-page', (req, res) => {
+  res.sendFile(path.join(__dirname, 'successStories.html'));
+});
+
+// Get all success stories
+app.get('/api/success-stories', (req, res) => {
+  const sql = `SELECT * FROM success_stories ORDER BY created_at DESC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      console.error('Error fetching stories:', err.message);
+      return res.status(500).json({ error: 'Error fetching stories' });
+    }
+    res.json(rows);
+  });
+});
+
+// Post a success story
+app.post('/success-stories', protectedRoute, (req, res) => {
+  const { company_name, story } = req.body;
+  const user_id = req.session.userId;
+
+  if (!company_name || !story) {
+    return res.status(400).json({ error: 'Company name and story are required.' });
+  }
+
+  // Get user's full name from profiles to store as student_name
+  db.get('SELECT full_name FROM profiles WHERE user_id = ?', [user_id], (err, profile) => {
+    if (err) {
+      console.error('Error fetching profile:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+
+    // Default to username if profile name is not set
+    let student_name = req.session.username;
+    if (profile && profile.full_name) {
+      student_name = profile.full_name;
+    }
+
+    const sql = `INSERT INTO success_stories (user_id, student_name, company_name, story) VALUES (?, ?, ?, ?)`;
+    db.run(sql, [user_id, student_name, company_name, story], function(err) {
+      if (err) {
+        console.error('Error saving story:', err.message);
+        return res.status(500).json({ error: 'Error saving story.' });
+      }
+      res.json({ message: 'Story added successfully', id: this.lastID });
+    });
+  });
 });
 
 // Check authentication status

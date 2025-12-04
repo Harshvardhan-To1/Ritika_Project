@@ -257,16 +257,16 @@ main {
     overflow: hidden;
 }
 
-/* Enhanced styling for 3-card layout */
-.services-grid-3 .service-card {
+/* Enhanced styling for service cards */
+.service-card {
     padding: 45px 35px;
 }
 
-.services-grid-3 .service-card h3 {
+.service-card h3 {
     font-size: 1.7rem;
 }
 
-.services-grid-3 .service-card p {
+.service-card p {
     font-size: 1.1rem;
 }
 

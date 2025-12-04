@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success Stories</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .header {
+        background-color: #333;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+    }
+    .header h1 {
+        margin: 0;
+    }
+    .nav {
+        display: flex;
+        justify-content: center;
+        background-color: #444;
+        padding: 10px;
+    }
+    .nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+    }
+    .nav a:hover {
+        color: #ddd;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .story-form {
+        margin-bottom: 30px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+    .story-form h2 {
+        margin-top: 0;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .form-group textarea {
+        height: 100px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+    .story-list {
+        list-style: none;
+        padding: 0;
+    }
+    .story-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+    .story-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+    .story-header h3 {
+        margin: 0;
+        color: #333;
+    }
+    .story-company {
+        color: #007bff;
+        font-weight: bold;
+    }
+    .story-content {
+        line-height: 1.6;
+        color: #555;
+    }
+    .story-date {
+        color: #999;
+        font-size: 0.8em;
+        margin-top: 10px;
+        text-align: right;
+    }
+    .error-message {
+        color: red;
+        display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Success Stories</h1>
+</div>
+
+<div class="nav">
+  <a href="/">Home</a>
+  <a href="/profile.html">Profile</a>
+  <a href="/chatbot.html">Chatbot</a>
+</div>
+
+<div class="container">
+    <div id="auth-section" style="display: none;">
+        <div class="story-form">
+            <h2>Share Your Success Story</h2>
+            <div id="error-message" class="error-message"></div>
+            <form id="story-form">
+                <div class="form-group">
+                    <label for="company_name">Company Name:</label>
+                    <input type="text" id="company_name" name="company_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="story">Your Story / Experience:</label>
+                    <textarea id="story" name="story" required placeholder="Share your interview experience, tips, and how you got placed..."></textarea>
+                </div>
+                <button type="submit">Submit Story</button>
+            </form>
+        </div>
+    </div>
+    <div id="login-prompt" style="text-align: center; margin-bottom: 20px;">
+        <p>Please <a href="/signin.html">Sign In</a> to share your own success story.</p>
+    </div>
+
+    <h2>Recent Success Stories</h2>
+    <div id="stories-container" class="story-list">
+        <!-- Stories will be loaded here -->
+        <p>Loading stories...</p>
+    </div>
+</div>
+
+<script>
+    // Check authentication status
+    fetch('/auth-status')
+        .then(response => response.json())
+        .then(data => {
+            if (data.authenticated) {
+                document.getElementById('auth-section').style.display = 'block';
+                document.getElementById('login-prompt').style.display = 'none';
+            }
+        });
+
+    // Load stories
+    function loadStories() {
+        fetch('/api/success-stories')
+            .then(response => response.json())
+            .then(stories => {
+                const container = document.getElementById('stories-container');
+                if (stories.length === 0) {
+                    container.innerHTML = '<p>No stories yet. Be the first to share!</p>';
+                    return;
+                }
+
+                container.innerHTML = stories.map(story => `
+                    <div class="story-item">
+                        <div class="story-header">
+                            <h3>${escapeHtml(story.student_name || 'Anonymous')}</h3>
+                            <span class="story-company">${escapeHtml(story.company_name)}</span>
+                        </div>
+                        <div class="story-content">
+                            ${escapeHtml(story.story).replace(/\n/g, '<br>')}
+                        </div>
+                        <div class="story-date">
+                            Posted on ${new Date(story.created_at).toLocaleDateString()}
+                        </div>
+                    </div>
+                `).join('');
+            })
+            .catch(err => {
+                console.error('Error loading stories:', err);
+                document.getElementById('stories-container').innerHTML = '<p>Error loading stories.</p>';
+            });
+    }
+
+    // Submit story
+    document.getElementById('story-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const company_name = document.getElementById('company_name').value;
+        const story = document.getElementById('story').value;
+        const errorEl = document.getElementById('error-message');
+
+        fetch('/success-stories', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ company_name, story })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Clear form and reload stories
+                document.getElementById('story-form').reset();
+                loadStories();
+                alert('Story submitted successfully!');
+            } else {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'Error submitting story');
+                });
+            }
+        })
+        .catch(err => {
+            errorEl.textContent = err.message;
+            errorEl.style.display = 'block';
+        });
+    });
+
+    // Utility to prevent XSS
+    function escapeHtml(text) {
+        if (!text) return '';
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    // Initial load
+    loadStories();
+</script>
+
+</body>
+</html>

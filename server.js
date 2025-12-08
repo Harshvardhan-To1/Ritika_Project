@@ -5,11 +5,11 @@ const db = require('./database.js');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 require('dotenv').config();
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const app = express();
 const port = 3000;
 
@@ -202,18 +202,79 @@ app.post('/apply', (req, res) => {
   });
 });
 
-// Chatbot route
+// Original non-streaming chatbot route (kept for backward compatibility)
 app.post('/chatbot', async (req, res) => {
   const userMessage = req.body.message;
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp"});
-    const result = await model.generateContent(userMessage);
-    const response = await result.response;
-    const text = response.text();
+    const completion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: "You are a helpful career assistant for Placemate, a placement portal. Help students with interview preparation, resume tips, career guidance, and placement-related queries. Be concise, friendly, and professional."
+        },
+        {
+          role: "user",
+          content: userMessage
+        }
+      ],
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
+      max_tokens: 1024
+    });
+    const text = completion.choices[0]?.message?.content || 'Sorry, I could not generate a response.';
     res.json({ response: text });
   } catch (error) {
     console.error(error);
     res.status(500).json({ response: 'Error generating response from AI.' });
+  }
+});
+
+// NEW: Streaming chatbot route using Server-Sent Events (SSE) with Groq
+app.post('/chatbot/stream', async (req, res) => {
+  const userMessage = req.body.message;
+  
+  // Set headers for Server-Sent Events
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('X-Accel-Buffering', 'no'); // Disable buffering for nginx
+  
+  try {
+    // Use Groq streaming
+    const stream = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: "You are a helpful career assistant for Placemate, a placement portal. Help students with interview preparation, resume tips, career guidance, and placement-related queries. Be concise, friendly, and professional."
+        },
+        {
+          role: "user",
+          content: userMessage
+        }
+      ],
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
+      max_tokens: 1024,
+      stream: true
+    });
+    
+    // Stream each chunk as it arrives
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || '';
+      if (content) {
+        // Send the chunk as an SSE event
+        res.write(`data: ${JSON.stringify({ text: content })}\n\n`);
+      }
+    }
+    
+    // Send completion signal
+    res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+    res.end();
+    
+  } catch (error) {
+    console.error('Streaming error:', error);
+    res.write(`data: ${JSON.stringify({ error: 'Error generating response from AI.' })}\n\n`);
+    res.end();
   }
 });
 
